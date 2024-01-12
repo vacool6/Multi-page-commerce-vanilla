@@ -61,8 +61,33 @@ const detailsPageFiller = (product) => {
   div.append(p3);
   div.append(button);
 
+  //
+  button.addEventListener("click", () => {
+    addToCart(product);
+  });
   return detailsContainer.append(div);
 };
+
+// Add to cart
+function addToCart(newItem) {
+  if (!localStorage.getItem("cartItems")) {
+    localStorage.setItem("cartItems", "[]");
+  }
+
+  const cart = JSON.parse(localStorage.getItem("cartItems"));
+
+  for (let i of cart) {
+    if (i.id === newItem.id) {
+      alert("Item is already present in the cart");
+      return;
+    }
+  }
+
+  cart.push({ ...newItem, quantity: 1 });
+  localStorage.setItem("cartItems", JSON.stringify(cart));
+  alert("Item added!");
+  // console.log(cart);
+}
 
 const fetchProduct = async () => {
   try {

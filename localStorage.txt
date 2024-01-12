@@ -1,0 +1,18 @@
+Local storage it is a temporary storage that browser uses. There are limitations
+to this 
+
+1. Local storage, its size is limited. Browsers can store up to 5 MiB of local storage,
+and 5 MiB of session storage per origin. 
+
+2. User can delete the local data from ls. 
+
+Methods:
+
+localStorage.setItem("KEY","VALUE")
+localStorage.getItem("KEY")
+localStorage.remove("KEY")
+
+NOTE: We can only store strings in LS.
+
+a. To convert string into value we can use JSON.parse()
+b. To store values into LS we can convert them to string using JSON.stringify()
