@@ -1,8 +1,8 @@
 // API DOCS: https://dummyjson.com
 const allProducts = document.querySelector(".all-products");
-const prevBtn = document.querySelector(".prev-btn");
-const nextBtn = document.querySelector(".next-btn");
-const pageNumber = document.querySelector(".page-no");
+// const prevBtn = document.querySelector(".prev-btn");
+// const nextBtn = document.querySelector(".next-btn");
+// const pageNumber = document.querySelector(".page-no");
 
 let skip = 0;
 // IF skip is 0 page number is 1 means if skip is 90 what is the page no 10
@@ -39,7 +39,7 @@ const homePageFiller = (product) => {
   div.append(p3);
   div.append(button);
 
-  pageNumber.innerText = skip / 10 + 1;
+  // pageNumber.innerText = skip / 10 + 1;
   //
   div.addEventListener("click", () => {
     location.href = `details.html?productID=${product.id}`;
@@ -53,32 +53,32 @@ const homePageFiller = (product) => {
   return allProducts.append(div);
 };
 
-const pagination_btn_condition = () => {
-  if (skip >= 90) {
-    nextBtn.disabled = true;
-  } else {
-    nextBtn.disabled = false;
-  }
+// const pagination_btn_condition = () => {
+//   if (skip >= 90) {
+//     nextBtn.disabled = true;
+//   } else {
+//     nextBtn.disabled = false;
+//   }
 
-  if (skip <= 0) {
-    prevBtn.disabled = true;
-  } else {
-    prevBtn.disabled = false;
-  }
-};
+//   if (skip <= 0) {
+//     prevBtn.disabled = true;
+//   } else {
+//     prevBtn.disabled = false;
+//   }
+// };
 
-const page_changer = (type) => {
-  if (type === "next") {
-    skip = skip + 10;
-  } else if (type === "prev") {
-    skip = skip - 10;
-  } else {
-    return;
-  }
+// const page_changer = (type) => {
+//   if (type === "next") {
+//     skip = skip + 10;
+//   } else if (type === "prev") {
+//     skip = skip - 10;
+//   } else {
+//     return;
+//   }
 
-  pagination_btn_condition();
-  fetchAllProducts();
-};
+//   pagination_btn_condition();
+fetchAllProducts();
+// };
 
 // Add to cart
 function addToCart(newItem) {
@@ -118,14 +118,33 @@ async function fetchAllProducts() {
   }
 }
 
-pagination_btn_condition();
+// pagination_btn_condition();
 
 fetchAllProducts();
 
-nextBtn.addEventListener("click", () => {
-  page_changer("next");
-});
+// nextBtn.addEventListener("click", () => {
+//   page_changer("next");
+// });
 
-prevBtn.addEventListener("click", () => {
-  page_changer("prev");
+// prevBtn.addEventListener("click", () => {
+//   page_changer("prev");
+// });
+
+// Infinity scroll
+window.addEventListener("scroll", () => {
+  const windowHeight = window.innerHeight;
+  const scrollHeight = document.documentElement.scrollHeight;
+  const scrollPosition =
+    document.body.scrollTop + document.documentElement.scrollTop;
+  const correctorVal = 1;
+
+  const isAtBottom =
+    scrollPosition > scrollHeight - windowHeight - correctorVal;
+
+  if (isAtBottom) {
+    // ADD your logic
+    limit = limit + 10;
+
+    if (limit <= 100) fetchAllProducts();
+  }
 });

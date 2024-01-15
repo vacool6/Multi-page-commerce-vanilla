@@ -1,7 +1,22 @@
 const cartItems = JSON.parse(localStorage.getItem("cartItems"));
 
 const cartContainer = document.querySelector(".cart_container");
-const subTotal = document.querySelector(".sub_total");
+const emptyCart = document.querySelector(".empty_cart");
+const notEmptyCart = document.querySelector(".not_empty_cart");
+const notEmptyCartPara = document.querySelector(".not_empty_cart_para");
+const couponBtn = document.querySelector(".coupon_btn");
+const couponVal = document.querySelector(".coupon_val");
+const checkoutBtn = document.querySelector(".checkout_btn");
+
+// Login
+const emailInp = document.querySelector(".inpEmail");
+const passwordInp = document.querySelector(".inpPassword");
+const loginBtn = document.querySelector(".loginBtn");
+
+// Free codes
+// OFF50
+// OFF35
+const coupon_codes = ["OFF50", "OFF35"];
 
 let checkoutTotal = 0;
 
@@ -109,9 +124,72 @@ function quantityChanger(type, id) {
   location.reload();
 }
 
+loginBtn.addEventListener("click", () => {
+  if (!emailInp.value || !passwordInp.value) {
+    return alert("Email or password cannot be empty");
+  }
+
+  // TASK : Use Regex to validate email id's for gmail, yahoo $ outlook
+  if (!emailInp.value.includes("@")) {
+    return alert("Incorrect Email");
+  }
+
+  if (passwordInp.value === "pass123OK") {
+    const user = {
+      email: emailInp.value,
+      userID: Math.random() * 10,
+    };
+
+    localStorage.setItem("user", JSON.stringify(user));
+    document.querySelector(".layover").style.display = "none";
+    location.reload();
+  } else {
+    return alert("Incorrect password");
+  }
+});
+
 if (checkoutTotal === 0) {
-  subTotal.style.textAlign = "center";
-  subTotal.append("Your cart is empty");
+  emptyCart.style.display = "block";
+  notEmptyCart.style.display = "none";
 } else {
-  subTotal.append("TOTAL: $ " + checkoutTotal);
+  emptyCart.style.display = "none";
+  notEmptyCart.style.display = "block";
+
+  couponBtn.addEventListener("click", () => {
+    const code = couponVal.value;
+
+    if (!coupon_codes.includes(code)) {
+      alert("Code is not valid!");
+      return;
+    }
+
+    // TASK : Use loop here =
+    if (code === "OFF50") {
+      if (checkoutTotal >= 2000) {
+        notEmptyCartPara.innerHTML = "";
+        notEmptyCartPara.append("TOTAL: $ " + checkoutTotal * 0.5);
+      } else {
+        alert("Add items worth $2000 or above");
+      }
+    } else if (code === "OFF35") {
+      notEmptyCartPara.innerHTML = "";
+      notEmptyCartPara.append("TOTAL: $ " + checkoutTotal * 0.65);
+    }
+    // =
+  });
+
+  notEmptyCartPara.append("TOTAL: $ " + checkoutTotal);
+}
+
+// Validate id user is logged in or not
+const user = localStorage.getItem("user");
+if (!user) {
+  checkoutBtn.append("Login to continue");
+  checkoutBtn.disabled = true;
+  setTimeout(() => {
+    document.querySelector(".layover").style.display = "flex";
+  }, 2000);
+} else {
+  checkoutBtn.append("Checkout");
+  checkoutBtn.disabled = false;
 }
