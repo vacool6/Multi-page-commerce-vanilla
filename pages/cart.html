@@ -8,13 +8,51 @@
     <script src="../scripts/cart.js" defer></script>
   </head>
   <body>
-    <nav class="navbar">
-      <h1>YOU BAG</h1>
-      <a href="home.html" style="text-decoration: none; color: black">HOME</a>
-    </nav>
+    <main>
+      <section class="layover">
+        <div class="login_modal">
+          <h1>LOGIN</h1>
+          <label for="email">Email</label>
+          <input
+            type="email"
+            class="inpEmail"
+            autocomplete="off"
+            id="email"
+            placeholder="Enter your email"
+            required
+          />
+          <label for="password">Password</label>
+          <input
+            class="inpPassword"
+            autocomplete="off"
+            id="password"
+            placeholder="Enter your password"
+            type="password"
+            required
+          />
+          <button class="loginBtn">SIGN IN</button>
+        </div>
+      </section>
 
-    <section class="cart_container"></section>
+      <nav class="navbar">
+        <h1>YOU BAG</h1>
+        <a href="home.html" style="text-decoration: none; color: black">HOME</a>
+      </nav>
 
-    <section class="sub_total"></section>
+      <section class="cart_container"></section>
+
+      <section class="sub_total">
+        <div class="empty_cart" style="text-align: center">
+          Your cart is empty
+        </div>
+        <div class="not_empty_cart">
+          <p class="not_empty_cart_para"></p>
+          <button class="coupon_btn">Apply Code</button>
+          <input placeholder="Enter promo code" class="coupon_val" />
+          <br />
+          <button class="checkout_btn"></button>
+        </div>
+      </section>
+    </main>
   </body>
 </html>
